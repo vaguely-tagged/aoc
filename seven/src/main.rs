@@ -52,7 +52,7 @@ fn does_pass(total: u64, numbers: &Vec<u64>, op_string: String, len: usize) -> b
         return false;
     }
 
-    for c in ['+', '*'] {
+    for c in ['+', '*', '|'] {
         if does_pass(
             total,
             numbers,
@@ -81,6 +81,13 @@ fn check_total(operations: &str, numbers: &Vec<u64>, total: u64) -> bool {
         match operations.get(n).unwrap() {
             '+' => curr_total += num,
             '*' => curr_total *= num,
+            '|' => {
+                let mut temp_string = curr_total.to_string();
+                temp_string.push_str(&num.to_string());
+
+                let temp_num = temp_string.parse::<u64>().unwrap();
+                curr_total = temp_num
+            },
             _ => panic!("invalid op"),
         }
     }
